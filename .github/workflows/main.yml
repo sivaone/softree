@@ -27,11 +27,12 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
+          architecture: x64
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
           settings-path: ${{ github.workspace }} # location for the settings.xml file
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B -U package --file pom.xml
         # Runs a single command using the runners shell
         
       - name: Cache SonarCloud packages
@@ -52,6 +53,12 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           
+      - run: mkdir staging && cp target/*.jar staging
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Package
+          path: staging
 
       # Runs a set of commands using the runners shell
       - name: Complete message
