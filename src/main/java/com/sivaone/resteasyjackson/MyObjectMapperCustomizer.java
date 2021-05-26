@@ -7,6 +7,7 @@ import io.quarkus.jackson.ObjectMapperCustomizer;
 import javax.inject.Singleton;
 
 @Singleton
+@SuppressWarnings("unused")
 public class MyObjectMapperCustomizer implements ObjectMapperCustomizer {
 
     @Override
