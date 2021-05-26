@@ -37,6 +37,7 @@ public class JacksonResource {
         return quarks;
     }
 
+    @SuppressWarnings("unused")
     public static class Quark {
         public String name;
         public String description;
